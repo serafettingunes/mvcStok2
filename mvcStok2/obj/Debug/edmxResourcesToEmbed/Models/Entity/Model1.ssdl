@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MVCStokModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="KATEGORILER">
+    <Key>
+      <PropertyRef Name="KATEGORIID" />
+    </Key>
+    <Property Name="KATEGORIID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KATEGORIAD" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="MUSTERILER">
+    <Key>
+      <PropertyRef Name="MUSTERIID" />
+    </Key>
+    <Property Name="MUSTERIID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MUSTERIAD" Type="nvarchar" MaxLength="50" />
+    <Property Name="MUSTERISOYAD" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="SATISLAR">
+    <Key>
+      <PropertyRef Name="SATISID" />
+    </Key>
+    <Property Name="SATISID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MUSTERI" Type="int" />
+    <Property Name="URUN" Type="int" />
+    <Property Name="FIYAT" Type="nchar" MaxLength="10" />
+    <Property Name="ADET" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="URUNLER">
+    <Key>
+      <PropertyRef Name="URUNID" />
+    </Key>
+    <Property Name="URUNID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="URUNAD" Type="nvarchar" MaxLength="50" />
+    <Property Name="MARKA" Type="nvarchar" MaxLength="50" />
+    <Property Name="FIYAT" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="KATEGORI" Type="int" />
+    <Property Name="STOK" Type="int" />
+  </EntityType>
+  <Association Name="FK_SATISLAR_MUSTERILER">
+    <End Role="MUSTERILER" Type="Self.MUSTERILER" Multiplicity="0..1" />
+    <End Role="SATISLAR" Type="Self.SATISLAR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MUSTERILER">
+        <PropertyRef Name="MUSTERIID" />
+      </Principal>
+      <Dependent Role="SATISLAR">
+        <PropertyRef Name="MUSTERI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SATISLAR_URUNLER">
+    <End Role="URUNLER" Type="Self.URUNLER" Multiplicity="0..1" />
+    <End Role="SATISLAR" Type="Self.SATISLAR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="URUNLER">
+        <PropertyRef Name="URUNID" />
+      </Principal>
+      <Dependent Role="SATISLAR">
+        <PropertyRef Name="URUN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_URUNLER_KATEGORILER">
+    <End Role="KATEGORILER" Type="Self.KATEGORILER" Multiplicity="0..1" />
+    <End Role="URUNLER" Type="Self.URUNLER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KATEGORILER">
+        <PropertyRef Name="KATEGORIID" />
+      </Principal>
+      <Dependent Role="URUNLER">
+        <PropertyRef Name="KATEGORI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MVCStokModelStoreContainer">
+    <EntitySet Name="KATEGORILER" EntityType="Self.KATEGORILER" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MUSTERILER" EntityType="Self.MUSTERILER" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SATISLAR" EntityType="Self.SATISLAR" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="URUNLER" EntityType="Self.URUNLER" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_SATISLAR_MUSTERILER" Association="Self.FK_SATISLAR_MUSTERILER">
+      <End Role="MUSTERILER" EntitySet="MUSTERILER" />
+      <End Role="SATISLAR" EntitySet="SATISLAR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SATISLAR_URUNLER" Association="Self.FK_SATISLAR_URUNLER">
+      <End Role="URUNLER" EntitySet="URUNLER" />
+      <End Role="SATISLAR" EntitySet="SATISLAR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_URUNLER_KATEGORILER" Association="Self.FK_URUNLER_KATEGORILER">
+      <End Role="KATEGORILER" EntitySet="KATEGORILER" />
+      <End Role="URUNLER" EntitySet="URUNLER" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

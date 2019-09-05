@@ -1,0 +1,40 @@
+﻿@model mvcStok2.Models.Entity.URUNLER
+@{
+    ViewBag.Title = "UrunGetir";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+
+@using (Html.BeginForm("URUNGUNCELLE", "Urun", FormMethod.Post))
+{
+    <div>
+        @Html.LabelFor(m => m.URUNID)
+        @Html.TextBoxFor(m => m.URUNID, new { @class = "form-control" })
+    </div>
+    <div>
+        @Html.LabelFor(m => m.URUNAD)
+        @Html.TextBoxFor(m => m.URUNAD, new { @class = "form-control" })
+    </div>
+    <div>
+        @Html.LabelFor(m => m.MARKA)
+        @Html.TextBoxFor(m => m.MARKA, new { @class = "form-control" })
+    </div>
+    <div>
+        @Html.LabelFor(m => m.FIYAT)
+        @Html.TextBoxFor(m => m.FIYAT, new { @class = "form-control" })
+    </div>
+    <div>
+        @Html.LabelFor(m => m.KATEGORILER.KATEGORIAD)
+        @Html.DropDownListFor(m=>m.KATEGORILER.KATEGORIAD,(List<SelectListItem>)ViewBag.dgr,new { @class = "form-control" })
+    </div>
+    <div>
+        @Html.LabelFor(m => m.STOK)
+        @Html.TextBoxFor(m => m.STOK, new { @class = "form-control" })
+    </div>
+    <div>
+        <button style="margin-top:15px;" class="btn btn-info" >
+             ÜRÜN GÜNCELLE
+        </button>
+    </div>
+
+}

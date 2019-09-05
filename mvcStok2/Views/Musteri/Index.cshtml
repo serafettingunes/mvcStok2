@@ -1,0 +1,44 @@
+﻿@using mvcStok2.Models.Entity
+@model List<MUSTERILER>
+    @{
+        ViewBag.Title = "Index";
+        Layout = "~/Views/Shared/_MainLayout.cshtml";
+    }
+
+
+
+    <table class="table table-bordered">
+
+        @using (Html.BeginForm("Index", "Musteri", FormMethod.Get))
+        {
+        <p>Aranacak kelime : <input type="submit" value="ARA" />         </p>
+        @Html.TextBox("p")
+           
+         }
+        <tr>
+            <th>MÜŞTERİ ID</th>
+            <th>MÜŞTERİ AD</th>
+            <th>MÜŞTERİ SOYAD</th>
+            <th>SİL</th>
+            <th>GÜNCELLE</th>
+            <th>ALERT</th>
+        </tr>
+
+        <tbody>
+            @foreach (var m in Model)
+            {
+                <tr>
+                    <td>@m.MUSTERIID</td>
+                    <td>@m.MUSTERIAD</td>
+                    <td>@m.MUSTERISOYAD</td>
+                    <td><a href="/Musteri/SIL/@m.MUSTERIID" class="btn btn-danger">SİL</a></td>
+                    <td><a href="/Musteri/MusteriGetir/@m.MUSTERIID" class="btn btn-success">GÜNCELLE</a></td>
+                    <td>@Html.ActionLink("SİL2", "SIL", new { id = m.MUSTERIID }, new { @class = "btn btn-warning", onclick = "return confirm('Gerçekten silmek istiyor musun?')" })</td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+    <a href="/Musteri/YeniMusteriEkle/" class="btn btn-info">YENİ MÜŞTERİ EKLE </a>
